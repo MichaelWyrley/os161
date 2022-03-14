@@ -175,11 +175,11 @@ void
 lock_destroy(struct lock *lock)
 {
 	KASSERT(lock != NULL);
-    KASSERT(lock->lk_holder != NULL)
+    KASSERT(lock->lk_holder != NULL);
 
 	// add stuff here as needed
 
-    spinlock_cleanup(&lock->lk_lock);
+    spinlock_cleanup(&lock->lk);
 	wchan_destroy(lock->lk_wchan);
 
 	kfree(lock->lk_name);
@@ -220,12 +220,12 @@ lock_release(struct lock *lock)
 
     lock->held = false;
     lock->lk_holder = NULL;
-    wchan_wakeall(lock->lk_wchan, &lock->lk));
+    wchan_wakeall(lock->lk_wchan, &lock->lk);
 
 	/* Call this (atomically) when the lock is released */
 	HANGMAN_RELEASE(&curthread->t_hangman, &lock->lk_hangman);
 
-    spinlock_release(&lock->lk)
+    spinlock_release(&lock->lk);
 
 }
 
@@ -237,11 +237,11 @@ lock_do_i_hold(struct lock *lock)
 	spinlock_acquire(&lock->lk);
 
     if(lock->lk_holder == curthread){
-        spinlock_release(&lock->lk)
-        return true
+        spinlock_release(&lock->lk);
+        return true;
     } 
 
-    spinlock_release(&lock->lk)
+    spinlock_release(&lock->lk);
 	return true; // dummy until code gets written
 }
 
