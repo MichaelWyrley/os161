@@ -165,7 +165,7 @@ lock_create(const char *name)
 	}
     lock->held = false;
 
-	spinlock_init(&lock->lk_lock);
+	spinlock_init(&lock->lk);
     lock->lk_holder = NULL;
 
 	return lock;
