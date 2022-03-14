@@ -175,7 +175,7 @@ void
 lock_destroy(struct lock *lock)
 {
 	KASSERT(lock != NULL);
-    KASSERT(lock->lk_holder != true);
+    KASSERT(lock->held != true);
 
 	// add stuff here as needed
 
