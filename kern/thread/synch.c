@@ -236,7 +236,7 @@ lock_do_i_hold(struct lock *lock)
 	KASSERT(lock != NULL);
 
 	if(lock->held == true && lock->lk_holder == curthread) {
-        return true
+        return true;
     }
 	return false; // dummy until code gets written
 }
