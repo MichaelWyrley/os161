@@ -189,7 +189,7 @@ lock_destroy(struct lock *lock)
 void
 lock_acquire(struct lock *lock)
 {
-    KASSERT(lock != NULL);
+    // KASSERT(lock != NULL);
 	
     spinlock_acquire(&lock->lk)
     /* Call this (atomically) before waiting for a lock */
@@ -211,7 +211,7 @@ lock_acquire(struct lock *lock)
 void
 lock_release(struct lock *lock)
 {
-    KASSERT(lock != NULL);
+    // KASSERT(lock != NULL);
    
 
     spinlock_acquire(&lock->lk);
@@ -233,7 +233,7 @@ lock_release(struct lock *lock)
 bool
 lock_do_i_hold(struct lock *lock)
 {
-	KASSERT(lock != NULL);
+	// KASSERT(lock != NULL);
 
 	if(lock->held == true && lock->lk_holder == curthread) {
         return true;
