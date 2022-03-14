@@ -303,8 +303,8 @@ cv_wait(struct cv *cv, struct lock *lock)
 
     wchan_sleep(cv->cv_wchan, &cv->cv_lock);
 
-    lock_acquire(lock);
     spinlock_release(&cv->cv_lock);
+    lock_acquire(lock);
 }
 
 void
@@ -312,6 +312,7 @@ cv_signal(struct cv *cv, struct lock *lock)
 {
 	KASSERT(cv != NULL);
     KASSERT(lock != NULL);
+    KASSERT(lock_do_i_hold(lock) == true);
 	
     spinlock_acquire(&cv->cv_lock);
 
@@ -325,6 +326,7 @@ cv_broadcast(struct cv *cv, struct lock *lock)
 {
 	KASSERT(cv != NULL);
     KASSERT(lock != NULL);
+    KASSERT(lock_do_i_hold(lock) == true);
 	
     spinlock_acquire(&cv->cv_lock);
     
