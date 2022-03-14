@@ -189,7 +189,7 @@ lock_destroy(struct lock *lock)
 void
 lock_acquire(struct lock *lock)
 {
-    KASSERT(lock == NULL);
+    KASSERT(lock != NULL);
 	
     spinlock_acquire(&lock->lk)
     /* Call this (atomically) before waiting for a lock */
